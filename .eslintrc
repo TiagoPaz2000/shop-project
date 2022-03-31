@@ -24,7 +24,7 @@
       "functions": "always-multiline"
       }
     ],
-    "semi": 1,
+    "semi": 2,
     "comma-style": ["error", "last"],
     "no-trailing-spaces": ["error",
       {
