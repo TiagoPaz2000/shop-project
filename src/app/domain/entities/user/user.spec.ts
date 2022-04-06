@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 
-import User from '../entities/user';
+import User from './user';
 
 describe('User Test Suite', () => {
   const props = {
