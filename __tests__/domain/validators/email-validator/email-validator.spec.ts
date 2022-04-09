@@ -4,6 +4,9 @@ export interface IEmailValidator {
 
 class EmailValidator implements IEmailValidator {
   valid(email: string) {
+    const rgx = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    if (!rgx.test(email)) return false;
+
     return true;
   }
 }
@@ -30,5 +33,14 @@ describe('Email Validator Test Suit', () => {
 
     const result = sut.valid(request.email);
     expect(result).to.be.equal(true);
+  });
+
+  it('Email validator should return false if receive a invalid email', () => {
+    const { sut, request } = makeSut();
+
+    request.email = 'invalidEmail';
+
+    const result = sut.valid(request.email);
+    expect(result).to.be.equal(false);
   });
 });
