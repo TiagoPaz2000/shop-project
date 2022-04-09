@@ -43,4 +43,13 @@ describe('Email Validator Test Suit', () => {
     const result = sut.valid(request.email);
     expect(result).to.be.equal(false);
   });
+
+  it('Test if Email Validator return false when dont received a string', () => {
+    const { sut, request } = makeSut();
+
+    (request.email as any) = 123;
+
+    const result = sut.valid(request.email);
+    expect(result).to.be.equal(false);
+  });
 });
