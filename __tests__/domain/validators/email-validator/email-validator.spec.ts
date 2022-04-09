@@ -1,18 +1,7 @@
-export interface IEmailValidator {
-  valid: (email: string) => boolean;
-}
-
-class EmailValidator implements IEmailValidator {
-  valid(email: string) {
-    const rgx = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    if (!rgx.test(email)) return false;
-
-    return true;
-  }
-}
-
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
+
+import { EmailValidator } from '../../../../src/app/domain/validators/email-validator';
 
 const makeSut = () => {
   const sut = new EmailValidator();
