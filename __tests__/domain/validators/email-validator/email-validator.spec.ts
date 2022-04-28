@@ -16,7 +16,7 @@ const makeSut = () => {
   });
 };
 
-describe('Email Validator Test Suit', () => {
+describe('Email Validator Test Suite', () => {
   it('Email validator should return true if receive a valid email', () => {
     const { sut, request } = makeSut();
 

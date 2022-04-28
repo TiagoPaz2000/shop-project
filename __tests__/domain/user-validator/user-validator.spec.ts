@@ -1,5 +1,6 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
+import sinon from 'sinon';
 
 import UserValidator from '../../../src/app/domain/usecases/user/user-validator';
 import { IEmailValidator } from '../../../src/app/domain/validators/email-validator';
@@ -10,9 +11,6 @@ const makeSut = () => {
 
     valid(email: string) {
       this.email = email;
-      if (email === 'invalidEmail') {
-        return false;
-      }
 
       return true;
     }
@@ -52,8 +50,10 @@ describe('Create User Test Suite', () => {
   });
 
   it('test if email throw a error when dont received a valid email', () => {
-    const { sut, data } = makeSut();
-    data.email = 'invalidEmail';
+    const { sut, data, EmailValidator } = makeSut();
+    data.email = 'invalidEmail@mail.com';
+
+    sinon.stub(EmailValidator, 'valid').returns(false);
 
     const result = sut.create(data);
 
