@@ -34,7 +34,7 @@ const makeSut = () => {
   });
 };
 
-describe('Create User Test Suite', () => {
+describe('Validate User Test Suite', () => {
   it('test if a null error is returned when receive a valid data', () => {
     const { sut, data } = makeSut();
 

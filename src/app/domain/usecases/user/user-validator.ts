@@ -6,7 +6,7 @@ export default class UserValidator {
     this.validEmail = validEmail;
   }
 
-  create({ firstName, lastName, email, password }: User) {
+  create({ firstName, lastName, email, password }: Omit<User, 'id'>) {
     if (typeof firstName !== 'string') return ({ error: '"firstName" must be a string' });
     if (firstName.length <= 3) return ({ error: '"firstName" need to have more than 3 length' });
     if (typeof lastName !== 'string') return ({ error: '"lastName" must be a string' });
