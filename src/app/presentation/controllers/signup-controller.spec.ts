@@ -1,35 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
 import { describe, it } from 'mocha';
 import { expect} from 'chai';
 import sinon from 'sinon';
-import Controller from '../protocols/controller';
-import { HttpResponse } from '../protocols/http';
 import { IError, IUserValidator } from '../../domain/usecases/user/protocols';
 import User from '../../domain/entities/user/user';
-
-export namespace SignUpController {
-  export type Request = {
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-  }
-}
-
-
-class SignUpController implements Controller {
-  constructor(private userValidator: IUserValidator) {
-    this.userValidator = userValidator;
-  }
-
-  async handle(httpRequest: SignUpController.Request): Promise<HttpResponse> {
-    const validUser = this.userValidator.valid(httpRequest);
-    if (validUser.error) {
-      return ({ statusCode: validUser.status || 500, body: {} });
-    }
-    return ({ statusCode: 200, body: {} });
-  }
-}
+import { SignUpController } from './signup-controller';
 
 class UserValidatorStub implements IUserValidator {
   valid({ firstName, lastName, email, password }: Omit<User, 'id'>): IError {
