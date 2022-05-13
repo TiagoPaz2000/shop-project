@@ -38,14 +38,14 @@ describe('Validate User Test Suite', () => {
   it('test if a null error is returned when receive a valid data', () => {
     const { sut, data } = makeSut();
 
-    const result = sut.create(data);
-    expect(result).to.be.deep.equal({ error: null });
+    const result = sut.valid(data);
+    expect(result).to.be.deep.equal({ error: undefined });
   });
 
   it('test if email validator is called with correct values', () => {
     const { EmailValidator, sut, data } = makeSut();
 
-    sut.create(data);
+    sut.valid(data);
     expect(EmailValidator.email).to.be.equal('valid@mail.com');
   });
 
@@ -55,9 +55,9 @@ describe('Validate User Test Suite', () => {
 
     sinon.stub(EmailValidator, 'valid').returns(false);
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"email" has a incorrect format' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"email" has a incorrect format' });
   });
 
   it('test if first name is more than 3 length', () => {
@@ -65,9 +65,9 @@ describe('Validate User Test Suite', () => {
 
     data.firstName = '123';
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"firstName" need to have more than 3 length' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"firstName" need to have more than 3 length' });
   });
 
   it('test if first name throw a error when dont received a string', () => {
@@ -75,9 +75,9 @@ describe('Validate User Test Suite', () => {
 
     (data.firstName as any) = 123;
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"firstName" must be a string' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"firstName" must be a string' });
   });
 
   it('test if last name is more than 3 length', () => {
@@ -85,9 +85,9 @@ describe('Validate User Test Suite', () => {
 
     data.lastName= '123';
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"lastName" need to have more than 3 length' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"lastName" need to have more than 3 length' });
   });
 
   it('test if last name throw a error when dont received a string', () => {
@@ -95,9 +95,9 @@ describe('Validate User Test Suite', () => {
 
     (data.lastName as any) = 123;
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"lastName" must be a string' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"lastName" must be a string' });
   });
 
   it('test if password is more than 6 length', () => {
@@ -105,9 +105,9 @@ describe('Validate User Test Suite', () => {
 
     data.password = '12345';
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"password" need to have more than 6 length' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"password" need to have more than 6 length' });
   });
 
   it('test if password throw a error when dont received a string', () => {
@@ -115,9 +115,9 @@ describe('Validate User Test Suite', () => {
 
     (data.password as any) = 12345;
 
-    const result = sut.create(data);
+    const result = sut.valid(data);
 
-    expect(result).to.be.deep.equal({ error: '"password" must be a string' });
+    expect(result).to.be.deep.equal({ status: 400, error: '"password" must be a string' });
   });
 });
 
