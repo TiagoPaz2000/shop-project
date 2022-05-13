@@ -1,13 +1,13 @@
 import User from '../../entities/user/user';
 import { IEmailValidator } from '../../validators/email-validator';
-import { IUserValidator } from './protocols';
+import { IError, IUserValidator } from './protocols';
 
 export default class UserValidator implements IUserValidator {
   constructor(private validEmail: IEmailValidator) {
     this.validEmail = validEmail;
   }
 
-  valid({ firstName, lastName, email, password }: Omit<User, 'id'>) {
+  valid({ firstName, lastName, email, password }: Omit<User, 'id'>): IError {
     const status = 400;
     if (typeof firstName !== 'string') return ({ error: '"firstName" must be a string', status });
     if (firstName.length <= 3) return ({ error: '"firstName" need to have more than 3 length', status });
