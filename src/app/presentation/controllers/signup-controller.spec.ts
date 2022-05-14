@@ -3,23 +3,39 @@
 import { describe, it } from 'mocha';
 import { expect} from 'chai';
 import sinon from 'sinon';
-import { IError, IUserValidator } from '../../domain/usecases/user/protocols';
+import { IEmailExists, IError, IUserValidator } from '../../domain/protocols';
 import User from '../../domain/entities/user/user';
 import { SignUpController } from './signup-controller';
 
-class UserValidatorStub implements IUserValidator {
-  valid({ firstName, lastName, email, password }: Omit<User, 'id'>): IError {
-    return ({ error: undefined });
+const makeUserValidator = (): IUserValidator => {
+  class UserValidatorStub implements IUserValidator {
+    valid({ firstName, lastName, email, password }: Omit<User, 'id'>): IError {
+      return ({ error: undefined });
+    }
   }
-}
+
+  return new UserValidatorStub();
+};
+
+const makeEmailExists = (): IEmailExists => {
+  class EmailExistsStub implements IEmailExists {
+    async valid(email: User['email']): Promise<IError> {
+      return ({ error: undefined });
+    }
+  }
+
+  return new EmailExistsStub();
+};
 
 const makeSut = () => {
-  const userValidator = new UserValidatorStub;
-  const sut = new SignUpController(userValidator);
+  const userValidator = makeUserValidator();
+  const emailExists = makeEmailExists();
+  const sut = new SignUpController(userValidator, emailExists);
 
   return ({
     sut,
     userValidator,
+    emailExists,
   });
 };
 
@@ -28,10 +44,15 @@ describe('SignUpController', () => {
     const { sut } = makeSut();
 
     const httpRequest = {
-      body: {},
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
     };
 
-    const httpResponse = await sut.handle(httpRequest as any);
+    const httpResponse = await sut.handle(httpRequest.body);
 
     expect(httpResponse.statusCode).to.equal(200);
   });
@@ -72,5 +93,24 @@ describe('SignUpController', () => {
     await sut.handle(httpRequest.body);
 
     expect(userValidatorSpy.calledWith(httpRequest.body)).to.be.true;
+  });
+
+  it('Should return status 400 if receive an email used', async () => {
+    const { sut, emailExists } = makeSut();
+
+    sinon.stub(emailExists, 'valid').resolves({ error: '"email" already used', status: 400 });
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'used_email',
+        password: 'valid_password',
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest.body);
+
+    expect(httpResponse.statusCode).to.equal(400);
   });
 });
