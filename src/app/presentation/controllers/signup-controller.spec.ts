@@ -40,23 +40,6 @@ const makeSut = () => {
 };
 
 describe('SignUpController', () => {
-  it('Should return status 200 if receive valid user data', async () => {
-    const { sut } = makeSut();
-
-    const httpRequest = {
-      body: {
-        firstName: 'valid_firstName',
-        lastName: 'valid_lastName',
-        email: 'valid_email',
-        password: 'valid_password',
-      },
-    };
-
-    const httpResponse = await sut.handle(httpRequest.body);
-
-    expect(httpResponse.statusCode).to.equal(200);
-  });
-
   it('Should return status 400 if receive invalid user first name', async () => {
     const { sut, userValidator } = makeSut();
 
@@ -113,4 +96,39 @@ describe('SignUpController', () => {
 
     expect(httpResponse.statusCode).to.equal(400);
   });
+
+  it('Should return a token when new account is created', async () => {
+    const { sut } = makeSut();
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest.body);
+
+    expect(httpResponse.body).to.deep.equal({ token: 'valid_token'});
+  });
+
+  it('Should return a status 201 new account is created', async () => {
+    const { sut } = makeSut();
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest.body);
+
+    expect(httpResponse.statusCode).to.equal(201);
+  });
+
 });

@@ -28,6 +28,6 @@ export class SignUpController implements Controller {
       return ({ statusCode: 400, body: {} });
     }
 
-    return ({ statusCode: 200, body: {} });
+    return ({ statusCode: 201, body: { token: 'valid_token' } });
   }
 }
