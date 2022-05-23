@@ -32,6 +32,8 @@ export class SignUpController implements Controller {
       return ({ statusCode: 400, body: {} });
     }
 
-    return ({ statusCode: 201, body: { token: 'valid_token' } });
+    const newAccount = await this.newAccount.create(httpRequest);
+
+    return ({ statusCode: 201, body: { token: newAccount } });
   }
 }
