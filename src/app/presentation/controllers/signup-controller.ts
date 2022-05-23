@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import Controller from '../protocols/controller';
 import { HttpResponse } from '../protocols/http';
-import { IUserValidator } from '../../domain/protocols';
+import { IEmailExists, INewAccount, IUserValidator } from '../../domain/protocols';
 
 namespace SignUpController {
   export type Request = {
@@ -13,7 +13,11 @@ namespace SignUpController {
 }
 
 export class SignUpController implements Controller {
-  constructor(private userValidator: IUserValidator, private emailExists: any) {
+  constructor(
+    private userValidator: IUserValidator,
+    private emailExists: IEmailExists,
+    private newAccount: INewAccount,
+  ) {
     this.userValidator = userValidator;
   }
 

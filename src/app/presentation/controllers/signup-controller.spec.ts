@@ -27,15 +27,27 @@ const makeEmailExists = (): IEmailExists => {
   return new EmailExistsStub();
 };
 
+const makeNewAccount = (): any => {
+  class NewAccountStub {
+    async create(userData: Omit<User, 'id'>): Promise<string> {
+      return 'valid_token';
+    }
+  }
+
+  return new NewAccountStub();
+};
+
 const makeSut = () => {
   const userValidator = makeUserValidator();
   const emailExists = makeEmailExists();
-  const sut = new SignUpController(userValidator, emailExists);
+  const newAccount = makeNewAccount();
+  const sut = new SignUpController(userValidator, emailExists, newAccount);
 
   return ({
     sut,
     userValidator,
     emailExists,
+    newAccount,
   });
 };
 
@@ -131,4 +143,22 @@ describe('SignUpController', () => {
     expect(httpResponse.statusCode).to.equal(201);
   });
 
+  it('Should new account method is called with correct params', async () => {
+    const { sut, newAccount } = makeSut();
+
+    const newAccountSpy = sinon.spy(newAccount, 'create');
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
+    };
+
+    await sut.handle(httpRequest.body);
+
+    expect(newAccountSpy.calledWith(httpRequest.body)).to.be.true;
+  });
 });
