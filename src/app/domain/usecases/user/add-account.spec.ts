@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
 import { describe, it } from 'mocha';
-import { expect, use} from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import User from '../../entities/user/user';
 import { IToken, ITokenGenerator, IUserRepository } from '../../protocols';
 import AddAccount from './add-account';
-import exp from 'constants';
 
 const makeTokenGenerator = (): ITokenGenerator => {
   class TokenGeneratorStub implements ITokenGenerator {
@@ -22,7 +21,7 @@ const makeUserRepository = (): IUserRepository => {
   class UserRepositoryStub implements IUserRepository {
     async create(data: Omit<User, 'id'>): Promise<User> {
       return new Promise(resolve => resolve({
-        id: 'valid_token',
+        id: 'valid_id',
         firstName: 'valid_firstName',
         lastName: 'valid_lastName',
         email: 'valid_email',
@@ -79,5 +78,37 @@ describe('SignUpController', () => {
     } catch (error) {
       expect(userRepository.create).to.throw();
     }
+  });
+
+  it('Should method create of token generator called with correct data', async () => {
+    const { sut, tokenGenerator } = makeSut();
+
+    const tokenGeneratorSpy = sinon.spy(tokenGenerator, 'create');
+
+    const fakeData: Omit<User, 'id'> = {
+      firstName: 'valid_firstName',
+      lastName: 'valid_lastName',
+      email: 'valid_email',
+      password: 'valid_password',
+    };
+
+    await sut.create(fakeData);
+
+    expect(tokenGeneratorSpy.calledWith('valid_id')).to.be.true;
+  });
+
+  it('Should sut return a new token if receive correct values', async () => {
+    const { sut } = makeSut();
+
+    const fakeData: Omit<User, 'id'> = {
+      firstName: 'valid_firstName',
+      lastName: 'valid_lastName',
+      email: 'valid_email',
+      password: 'valid_password',
+    };
+
+    const newAccount = await sut.create(fakeData);
+
+    expect(newAccount).to.be.equal('valid_token');
   });
 });
