@@ -4,8 +4,9 @@ import { describe, it } from 'mocha';
 import { expect, use} from 'chai';
 import sinon from 'sinon';
 import User from '../../entities/user/user';
-import { INewAccount, IToken, ITokenGenerator, IUserRepository } from '../../protocols';
+import { IToken, ITokenGenerator, IUserRepository } from '../../protocols';
 import AddAccount from './add-account';
+import exp from 'constants';
 
 const makeTokenGenerator = (): ITokenGenerator => {
   class TokenGeneratorStub implements ITokenGenerator {
@@ -63,7 +64,7 @@ describe('SignUpController', () => {
     expect(userRepositorySpy.calledWith(fakeData)).to.be.true;
   });
 
-    it('Should method create of user repository throw an error', async () => {
+  it('Should method create of user repository throw an error', async () => {
     const { sut, userRepository } = makeSut();
 
     sinon.stub(userRepository, 'create').throws();
