@@ -1,5 +1,6 @@
 import User from '../../entities/user/user';
-import { INewAccount, ITokenGenerator, IUserRepository } from '../../protocols';
+import { INewAccount, ITokenGenerator } from '../../protocols';
+import { IUserRepository } from '../../../data/usecases/user-repository';
 
 export default class AddAccount implements INewAccount {
   constructor(private userRepository: IUserRepository, private tokenGenerator: ITokenGenerator) {
