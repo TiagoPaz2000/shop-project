@@ -12,10 +12,6 @@ export interface INewAccount {
   create(data: Omit<User, 'id'>): Promise<string>
 }
 
-export interface IUserRepository {
-  create(data: Omit<User, 'id'>): Promise<User>
-}
-
 export interface IToken {
   token: string
 }
