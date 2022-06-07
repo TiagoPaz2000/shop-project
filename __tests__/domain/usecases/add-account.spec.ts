@@ -3,9 +3,10 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import User from '../../entities/user/user';
-import { IToken, ITokenGenerator, IUserRepository } from '../../protocols';
-import AddAccount from './add-account';
+import User from '../../../src/app/domain/entities/user/user';
+import { IToken, ITokenGenerator } from '../../../src/app/domain/protocols';
+import { IUserRepository } from '../../../src/app/data/usecases/user-repository';
+import AddAccount from '../../../src/app/domain/usecases/user/add-account';
 
 const makeTokenGenerator = (): ITokenGenerator => {
   class TokenGeneratorStub implements ITokenGenerator {

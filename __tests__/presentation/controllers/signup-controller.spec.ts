@@ -3,9 +3,9 @@
 import { describe, it } from 'mocha';
 import { expect} from 'chai';
 import sinon from 'sinon';
-import { IEmailExists, IError, IUserValidator } from '../../domain/protocols';
-import User from '../../domain/entities/user/user';
-import { SignUpController } from './signup-controller';
+import { IEmailExists, IError, IUserValidator } from '../../../src/app/domain/protocols';
+import User from '../../../src/app/domain/entities/user/user';
+import { SignUpController } from '../../../src/app/presentation/controllers/signup-controller';
 
 const makeUserValidator = (): IUserValidator => {
   class UserValidatorStub implements IUserValidator {
