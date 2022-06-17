@@ -5,7 +5,7 @@ export interface IUserValidator {
 }
 
 export interface IEmailExists {
-  valid(email: User['email']): Promise<IError>
+  valid(email: User['email']): Promise<IError | undefined>
 }
 
 export interface INewAccount {
