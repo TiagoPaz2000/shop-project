@@ -20,6 +20,13 @@ export interface ITokenGenerator {
   create(userId: User['id']): IToken
 }
 
+export interface ITokenAdapter {
+  generate(userId: User['id'],
+    algorithm: string,
+    expireDate: string
+  ): string
+}
+
 export interface IError {
   error?: string
   status?: number
