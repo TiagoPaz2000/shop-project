@@ -22,7 +22,7 @@ const makeUserRepository = (): IUserRepository => {
   class UserRepositoryStub implements IUserRepository {
     async create(data: Omit<User, 'id'>): Promise<User> {
       return new Promise(resolve => resolve({
-        id: 'valid_id',
+        id: 1,
         firstName: 'valid_firstName',
         lastName: 'valid_lastName',
         email: 'valid_email',
@@ -95,7 +95,7 @@ describe('SignUpController', () => {
 
     await sut.create(fakeData);
 
-    expect(tokenGeneratorSpy.calledWith('valid_id')).to.be.true;
+    expect(tokenGeneratorSpy.calledWith(1)).to.be.true;
   });
 
   it('Should sut return a new token if receive correct values', async () => {
