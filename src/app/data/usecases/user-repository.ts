@@ -2,7 +2,8 @@ import User from '../../domain/entities/user/user';
 import UserEntity from '../../infra/typeorm/entity/User';
 
 export interface IUserRepository {
-  create(data: Omit<User, 'id'>): Promise<User>
+  create(data: Omit<User, 'id'>): Promise<User>;
+  findOne(email: User['email']): Promise<null | User>;
 }
 
 export class UserRepository implements IUserRepository {
@@ -14,5 +15,11 @@ export class UserRepository implements IUserRepository {
     user.password = data.password;
     const newUser = await user.save();
     return newUser;
+  }
+
+  async findOne(email: User['email']): Promise<null | User> {
+    const user = await UserEntity.findOneBy({ email });
+
+    return user;
   }
 }

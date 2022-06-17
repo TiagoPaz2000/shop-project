@@ -29,6 +29,10 @@ const makeUserRepository = (): IUserRepository => {
         password: 'valid_password',
       }));
     }
+
+    async findOne(email: User['email']): Promise<null | User> {
+      return null;
+    }
   }
 
   return new UserRepositoryStub();
