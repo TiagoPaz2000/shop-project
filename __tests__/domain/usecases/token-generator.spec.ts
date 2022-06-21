@@ -8,7 +8,6 @@ import TokenGenerator from '../../../src/app/domain/usecases/token/token-generat
 const makeTokenAdapter = (): ITokenAdapter => {
   class TokenAdapterStub implements ITokenAdapter {
     generate(userId: User['id'],
-      algorithm: string,
       expireDate: string,
     ): string {
       return 'valid_token';
@@ -37,12 +36,12 @@ describe('Token Generator', () => {
   it('Test if generator is called with correct arg', () => {
     const { sut, tokenAdapter } = makeSut();
     const userId = 1;
-    const config = { algoritm: 'HS256', expireData: '7d' };
+    const config = { expireData: '7d' };
     const tokenAdapterSpy = sinon.spy(tokenAdapter, 'generate');
     sut.create(userId);
 
     expect(tokenAdapterSpy
-      .calledWith(userId, config.algoritm, config.expireData))
+      .calledWith(userId, config.expireData))
       .true;
   });
 });

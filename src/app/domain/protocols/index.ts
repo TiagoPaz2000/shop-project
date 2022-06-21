@@ -22,7 +22,6 @@ export interface ITokenGenerator {
 
 export interface ITokenAdapter {
   generate(userId: User['id'],
-    algorithm: string,
     expireDate: string
   ): string
 }

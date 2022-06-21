@@ -7,9 +7,9 @@ export default class TokenGenerator implements ITokenGenerator {
   }
 
   create(userId: User['id']): IToken {
-    const config = { algoritm: 'HS256', expireData: '7d' };
+    const config = { expireData: '7d' };
     const token = this.tokenAdapter
-      .generate(userId, config.algoritm, config.expireData);
+      .generate(userId, config.expireData);
     return ({ token });
   }
 }
