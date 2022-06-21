@@ -1,9 +1,9 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { ITokenAdapter } from '../../protocols';
-import User from '../../entities/user/user';
-import TokenGenerator from './token-generator';
+import { ITokenAdapter } from '../../../src/app/domain/protocols';
+import User from '../../../src/app/domain/entities/user/user';
+import TokenGenerator from '../../../src/app/domain/usecases/token/token-generator';
 
 const makeTokenAdapter = (): ITokenAdapter => {
   class TokenAdapterStub implements ITokenAdapter {
@@ -25,7 +25,7 @@ const makeSut = () => {
   return { sut, tokenAdapter };
 };
 
-describe('Email Exists', () => {
+describe('Token Generator', () => {
   it('Should return a token with successfuly', () => {
     const { sut } = makeSut();
     const userId = 1;

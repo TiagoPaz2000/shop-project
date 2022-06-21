@@ -28,7 +28,7 @@ export class SignUpController implements Controller {
     }
 
     const emailExists = await this.emailExists.valid(httpRequest.email);
-    if (emailExists.error) {
+    if (emailExists) {
       return ({ statusCode: 400, body: {} });
     }
 

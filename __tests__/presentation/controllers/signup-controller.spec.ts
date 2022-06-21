@@ -19,8 +19,8 @@ const makeUserValidator = (): IUserValidator => {
 
 const makeEmailExists = (): IEmailExists => {
   class EmailExistsStub implements IEmailExists {
-    async valid(email: User['email']): Promise<IError> {
-      return ({ error: undefined });
+    async valid(email: User['email']): Promise<IError | undefined> {
+      return undefined;
     }
   }
 
@@ -123,7 +123,7 @@ describe('SignUpController', () => {
 
     const httpResponse = await sut.handle(httpRequest.body);
 
-    expect(httpResponse.body).to.deep.equal({ token: 'valid_token'});
+    expect(httpResponse.body).to.deep.equal({ token: 'valid_token' });
   });
 
   it('Should return a status 201 new account is created', async () => {
