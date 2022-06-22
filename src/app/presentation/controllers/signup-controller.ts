@@ -23,11 +23,14 @@ export class SignUpController implements Controller {
 
   async handle(httpRequest: SignUpController.Request): Promise<HttpResponse> {
     const validUser = this.userValidator.valid(httpRequest);
+    console.log(validUser);
+
     if (validUser.error) {
       return ({ statusCode: validUser.status || 500, body: {} });
     }
 
     const emailExists = await this.emailExists.valid(httpRequest.email);
+
     if (emailExists) {
       return ({ statusCode: 400, body: {} });
     }

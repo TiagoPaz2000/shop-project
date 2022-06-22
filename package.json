@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --require ts-node/register __tests__/**/**/**.spec.ts",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d src/app/infra/typeorm/data-source.ts"
   },
   "repository": {
     "type": "git",
