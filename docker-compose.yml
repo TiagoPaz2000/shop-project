@@ -3,6 +3,7 @@ services:
   postgres:
     image: postgres:10.3
     restart: always
+    container_name: postgres
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=docker
@@ -10,11 +11,40 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "porquinho"]
+      timeout: 10s
+      retries: 5
 
   adminer:
     image: adminer
     ports:
       - 8080:8080
 
+  app:
+    build: ./
+    restart: always
+    platform: linux/amd64
+    container_name: app_back
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./:/app
+    environment:
+      - PORT=3001
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=root
+      - DB_PASS=docker
+      - DB_NAME=porquinho
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]
+      timeout: 10s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres:
+  app:

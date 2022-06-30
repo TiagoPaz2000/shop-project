@@ -1,0 +1,19 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": true,
+      "decoratorsBeforeExport": false
+    }
+  },
+  "module": {
+    // You can specify "commonjs", "es6", "amd", "umd"
+    "type": "es6"
+  },
+  "env": {
+    "targets": {
+      "node": 16
+    }
+  }
+}

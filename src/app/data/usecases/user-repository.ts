@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import User from '../../domain/entities/user/user';
 import { AppDataSource } from '../../infra/typeorm/data-source';
 import UserEntity from '../../infra/typeorm/entity/User';
