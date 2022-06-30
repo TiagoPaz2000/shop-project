@@ -68,7 +68,8 @@ describe('SignUpController', () => {
 
     const httpResponse = await sut.handle(httpRequest.body);
 
-    expect(httpResponse.statusCode).to.equal(400);
+    expect(httpResponse.statusCode).to.be.equal(400);
+    expect(httpResponse.body).to.be.eql({ error: '"firstName" must be a string' })
   });
 
   it('Should valid user method is called with correct params', async () => {
@@ -107,6 +108,7 @@ describe('SignUpController', () => {
     const httpResponse = await sut.handle(httpRequest.body);
 
     expect(httpResponse.statusCode).to.equal(400);
+    expect(httpResponse.body).to.be.eql({ error: '"email" already used' })
   });
 
   it('Should return a token when new account is created', async () => {
