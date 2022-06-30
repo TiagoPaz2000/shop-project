@@ -1,0 +1,9 @@
+{
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "exclude": [
+      "__tests__",
+      "./src/server.ts"
+    ],
+    "include": ["src/app"]
+}

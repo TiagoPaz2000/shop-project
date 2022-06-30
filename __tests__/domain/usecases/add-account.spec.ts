@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-namespace */
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';

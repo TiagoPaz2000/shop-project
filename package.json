@@ -1,14 +1,14 @@
 {
-  "name": "My-Porquinho",
+  "name": "my-porquinho",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "build": "swc src -d build",
     "build-dev": "npm run build && NODE_ENV=development node --experimental-specifier-resolution=node --inspect build/server.js",
     "dev": "nodemon --ext ts --exec \"npm run build-dev\"",
     "test": "mocha --require ts-node/register __tests__/**/**/**.spec.ts",
+    "test:coverage": "nyc npm run test",
     "dev:tsc": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "lint": "eslint .",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/app/infra/typeorm/data-source.ts"
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/TiagoPaz2000/My-Porquinho#readme",
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.207",
     "@swc/core-linux-x64-musl": "^1.2.207",
@@ -42,7 +43,10 @@
     "eslint-config-airbnb-typescript": "^16.1.3",
     "mocha": "^9.2.2",
     "nodemon": "^2.0.18",
+    "nyc": "^15.1.0",
     "sinon": "^13.0.1",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.8.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.2"
   },

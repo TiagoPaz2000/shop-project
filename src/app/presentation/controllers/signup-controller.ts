@@ -22,20 +22,24 @@ export class SignUpController implements Controller {
   }
 
   async handle(httpRequest: SignUpController.Request): Promise<HttpResponse> {
-    const validUser = this.userValidator.valid(httpRequest);
+    try {
+      const validUser = this.userValidator.valid(httpRequest);
 
-    if (validUser.error) {
-      return ({ statusCode: validUser.status || 500, body: { error: validUser.error } });
+      if (validUser.error) {
+        return ({ statusCode: validUser.status || 500, body: { error: validUser.error } });
+      }
+
+      const emailExists = await this.emailExists.valid(httpRequest.email);
+
+      if (emailExists) {
+        return ({ statusCode: 400, body: { error: emailExists.error } });
+      }
+
+      const newAccount = await this.newAccount.create(httpRequest);
+
+      return ({ statusCode: 201, body: { token: newAccount } });
+    } catch (error) {
+      return ({ statusCode: 201, body: { error } });
     }
-
-    const emailExists = await this.emailExists.valid(httpRequest.email);
-
-    if (emailExists) {
-      return ({ statusCode: 400, body: { error: emailExists.error } });
-    }
-
-    const newAccount = await this.newAccount.create(httpRequest);
-
-    return ({ statusCode: 201, body: { token: newAccount } });
   }
 }
