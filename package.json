@@ -6,10 +6,10 @@
   "scripts": {
     "build": "swc src -d build",
     "build-dev": "npm run build && NODE_ENV=development node --experimental-specifier-resolution=node --inspect build/server.js",
-    "dev": "nodemon --ext ts --exec \"npm run build-dev\"",
+    "dev:swc": "nodemon --ext ts --exec \"npm run build-dev\"",
     "test": "mocha --require ts-node/register __tests__/**/**/**.spec.ts",
-    "test:coverage": "nyc npm run test",
-    "dev:tsc": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "test:nyc": "nyc npm run test",
+    "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "lint": "eslint .",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/app/infra/typeorm/data-source.ts"
   },
