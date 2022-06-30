@@ -27,6 +27,7 @@
   "devDependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.207",
+    "@swc/core-linux-x64-musl": "^1.2.207",
     "@types/chai": "^4.3.0",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
