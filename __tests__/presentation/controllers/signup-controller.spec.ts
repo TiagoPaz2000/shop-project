@@ -55,7 +55,7 @@ describe('SignUpController', () => {
   it('Should return status 400 if receive invalid user first name', async () => {
     const { sut, userValidator } = makeSut();
 
-    sinon.stub(userValidator, 'valid').returns({ error: '"firstName" must be a string', status: 400 });
+    sinon.stub(userValidator, 'valid').returns({ error: new Error('"firstName" must be a string'), status: 400 });
 
     const httpRequest = {
       body: {
@@ -94,7 +94,7 @@ describe('SignUpController', () => {
   it('Should return status 400 if receive an email used', async () => {
     const { sut, emailExists } = makeSut();
 
-    sinon.stub(emailExists, 'valid').resolves({ error: '"email" already used', status: 400 });
+    sinon.stub(emailExists, 'valid').resolves({ error: new Error('"email" already used'), status: 400 });
 
     const httpRequest = {
       body: {

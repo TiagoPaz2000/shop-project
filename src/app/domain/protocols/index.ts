@@ -27,6 +27,6 @@ export interface ITokenAdapter {
 }
 
 export interface IError {
-  error?: string
+  error?: Error
   status?: number
 }

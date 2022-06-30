@@ -65,9 +65,15 @@ describe('Validate User Test Suite', () => {
 
     data.firstName = '123';
 
-    const result = sut.valid(data);
+    try {
+      sut.valid(data);
+    } catch (error: any) {
+      expect(error.error.message)
+        .to.be.equal('"firstName" need to have more than 3 length');
+      expect(error.status)
+        .to.be.equal(400);
+    }
 
-    expect(result).to.be.deep.equal({ status: 400, error: '"firstName" need to have more than 3 length' });
   });
 
   it('test if first name throw a error when dont received a string', () => {
@@ -75,9 +81,15 @@ describe('Validate User Test Suite', () => {
 
     (data.firstName as any) = 123;
 
-    const result = sut.valid(data);
-
-    expect(result).to.be.deep.equal({ status: 400, error: '"firstName" must be a string' });
+    try {
+      sut.valid(data);
+      
+    } catch (error: any) {
+      expect(error.error.message)
+        .to.be.equal('"firstName" need to have more than 3 length');
+      expect(error.status)
+        .to.be.equal(400);
+    }
   });
 
   it('test if last name is more than 3 length', () => {

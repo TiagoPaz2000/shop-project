@@ -10,7 +10,7 @@ export default class EmailExists implements IEmailExists {
   async valid(email: User['email']): Promise<IError | undefined> {
     const exist = await this.userRepository.findOne(email);
     if (exist) {
-      return ({ status: 400, error: 'email already used' });
+      return ({ status: 400, error: new Error('email already used') });
     }
   }
 }
