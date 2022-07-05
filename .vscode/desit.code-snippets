@@ -11,7 +11,7 @@
 		"prefix": "dit",
 		"body": [
 			"describe('$1', () => {",
-      "\tit('$2', () => {});",
+      "\tit('$2', () => {$3});",
 			"});"
 		],
 		"description": "Log output to console"

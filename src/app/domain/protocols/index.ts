@@ -27,6 +27,11 @@ export interface ITokenAdapter {
 }
 
 export interface IError {
-  error?: Error
+  error: Error
   status?: number
+}
+
+export interface IHandleError {
+  status: number | undefined
+  error: Error
 }

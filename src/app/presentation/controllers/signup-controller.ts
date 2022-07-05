@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import Controller from '../protocols/controller';
 import { HttpResponse } from '../protocols/http';
-import { IEmailExists, INewAccount, IUserValidator } from '../../domain/protocols';
+import { IEmailExists, IError, INewAccount, IUserValidator } from '../../domain/protocols';
+import { handleError } from '../helpers';
 
 namespace SignUpController {
   export type Request = {
@@ -23,23 +24,16 @@ export class SignUpController implements Controller {
 
   async handle(httpRequest: SignUpController.Request): Promise<HttpResponse> {
     try {
-      const validUser = this.userValidator.valid(httpRequest);
+      this.userValidator.valid(httpRequest);
 
-      if (validUser.error) {
-        return ({ statusCode: validUser.status || 500, body: { error: validUser.error } });
-      }
-
-      const emailExists = await this.emailExists.valid(httpRequest.email);
-
-      if (emailExists) {
-        return ({ statusCode: 400, body: { error: emailExists.error } });
-      }
+      await this.emailExists.valid(httpRequest.email);
 
       const newAccount = await this.newAccount.create(httpRequest);
 
       return ({ statusCode: 201, body: { token: newAccount } });
     } catch (error) {
-      return ({ statusCode: 201, body: { error } });
+      const newError = error as IError;
+      return handleError({ error: newError.error, status: newError.status });
     }
   }
 }
