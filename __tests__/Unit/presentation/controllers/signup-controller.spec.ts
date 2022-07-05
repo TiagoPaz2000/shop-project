@@ -1,10 +1,10 @@
 import { describe, it } from 'mocha';
 import { expect} from 'chai';
 import sinon from 'sinon';
-import { IEmailExists, IError, IUserValidator } from '../../../src/app/domain/protocols';
-import User from '../../../src/app/domain/entities/user/user';
-import { SignUpController } from '../../../src/app/presentation/controllers/signup-controller';
-import { badRequest } from '../../../src/app/presentation/helpers'
+import { IEmailExists, IError, IUserValidator } from '../../../../src/app/domain/protocols';
+import User from '../../../../src/app/domain/entities/user/user';
+import { SignUpController } from '../../../../src/app/presentation/controllers/signup-controller';
+import { badRequest } from '../../../../src/app/presentation/helpers'
 
 const makeUserValidator = (): IUserValidator => {
   class UserValidatorStub implements IUserValidator {

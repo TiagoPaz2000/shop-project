@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 
-import { EmailValidator } from '../../../src/app/domain/validators/email-validator';
+import { EmailValidator } from '../../../../src/app/domain/validators/email-validator';
 
 const makeSut = () => {
   const sut = new EmailValidator();

@@ -1,9 +1,9 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { IUserRepository } from '../../../src/app/data/usecases/user-repository';
-import EmailExists from '../../../src/app/domain/validators/email-exists';
-import User from '../../../src/app/domain/entities/user/user';
+import { IUserRepository } from '../../../../src/app/data/usecases/user-repository';
+import EmailExists from '../../../../src/app/domain/validators/email-exists';
+import User from '../../../../src/app/domain/entities/user/user';
 
 const makeUserRepository = (): IUserRepository => {
   class UserRepositoryStub implements IUserRepository {

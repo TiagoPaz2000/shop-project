@@ -2,8 +2,8 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import UserValidator from '../../../src/app/domain/usecases/user/user-validator';
-import { IEmailValidator } from '../../../src/app/domain/validators/email-validator';
+import UserValidator from '../../../../src/app/domain/usecases/user/user-validator';
+import { IEmailValidator } from '../../../../src/app/domain/validators/email-validator';
 
 const makeSut = () => {
   class EmailValidatorSpy implements IEmailValidator {

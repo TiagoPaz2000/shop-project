@@ -1,9 +1,9 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { ITokenAdapter } from '../../../src/app/domain/protocols';
-import User from '../../../src/app/domain/entities/user/user';
-import TokenGenerator from '../../../src/app/domain/usecases/token/token-generator';
+import { ITokenAdapter } from '../../../../src/app/domain/protocols';
+import User from '../../../../src/app/domain/entities/user/user';
+import TokenGenerator from '../../../../src/app/domain/usecases/token/token-generator';
 
 const makeTokenAdapter = (): ITokenAdapter => {
   class TokenAdapterStub implements ITokenAdapter {
