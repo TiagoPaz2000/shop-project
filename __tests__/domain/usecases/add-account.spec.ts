@@ -28,7 +28,7 @@ const makeUserRepository = (): IUserRepository => {
       }));
     }
 
-    async findOne(email: User['email']): Promise<null | User> {
+    async findOneByEmail(email: User['email']): Promise<null | User> {
       return null;
     }
   }

@@ -17,7 +17,7 @@ const makeUserRepository = (): IUserRepository => {
       }));
     }
 
-    async findOne(email: User['email']): Promise<null | User> {
+    async findOneByEmail(email: User['email']): Promise<null | User> {
       return null;
     }
   }
@@ -35,7 +35,7 @@ const makeSut = () => {
 describe('Email Exists', () => {
   it('Should return a error if email exists', async () => {
     const { sut, userRepositoryStub } = makeSut();
-    sinon.stub(userRepositoryStub, 'findOne').resolves({
+    sinon.stub(userRepositoryStub, 'findOneByEmail').resolves({
       id: 1,
       firstName: 'valid_firstName',
       lastName: 'valid_lastName',
@@ -62,7 +62,7 @@ describe('Email Exists', () => {
 
   it('Test if findOne is called with correct arg', async () => {
     const { sut, userRepositoryStub } = makeSut();
-    const userRepositorySpy = sinon.spy(userRepositoryStub, 'findOne');
+    const userRepositorySpy = sinon.spy(userRepositoryStub, 'findOneByEmail');
 
     await sut.valid('valid_email');
 
