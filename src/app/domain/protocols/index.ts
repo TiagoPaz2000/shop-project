@@ -1,11 +1,11 @@
 import User from '../entities/user/user';
 
 export interface IUserValidator {
-  valid(data: Omit<User, 'id'>): IError
+  valid(data: Omit<User, 'id'>): void
 }
 
 export interface IEmailExists {
-  valid(email: User['email']): Promise<IError | undefined>
+  valid(email: User['email']): Promise<void>
 }
 
 export interface INewAccount {

@@ -35,18 +35,30 @@ const makeSut = () => {
 };
 
 describe('Validate User Test Suite', () => {
+  // it('test if user validator dont have a try catch', () => {
+  //   const { sut, data, EmailValidator } = makeSut();
+
+  //   sinon.stub(EmailValidator, 'valid').returns(false)
+  //   const sutStub = sinon.spy(sut, 'valid');
+
+  //   sut.valid(data)
+  //   expect(sutStub).to.throw();
+  // })
+
   it('test if a null error is returned when receive a valid data', () => {
     const { sut, data } = makeSut();
 
     const result = sut.valid(data);
-    expect(result).to.be.deep.equal({ error: undefined });
+    expect(result).to.be.equal(undefined);
   });
 
   it('test if email validator is called with correct values', () => {
     const { EmailValidator, sut, data } = makeSut();
 
+    const emailValidatorSpy = sinon.spy(EmailValidator, 'valid');
+
     sut.valid(data);
-    expect(EmailValidator.email).to.be.equal('valid@mail.com');
+    expect(emailValidatorSpy.calledWith('valid@mail.com')).true;
   });
 
   it('test if email throw a error when dont received a valid email', () => {
@@ -55,9 +67,14 @@ describe('Validate User Test Suite', () => {
 
     sinon.stub(EmailValidator, 'valid').returns(false);
 
-    const result = sut.valid(data);
+    try {
+      sut.valid(data);
+    } catch (error: any) {
+      expect(error.error.message).to.be.equal('"email" has a incorrect format');
+      expect(error.status).to.be.equal(400);
+    }
 
-    expect(result).to.be.deep.equal({ status: 400, error: '"email" has a incorrect format' });
+
   });
 
   it('test if first name is more than 3 length', () => {
@@ -86,7 +103,7 @@ describe('Validate User Test Suite', () => {
       
     } catch (error: any) {
       expect(error.error.message)
-        .to.be.equal('"firstName" need to have more than 3 length');
+        .to.be.equal('"firstName" must be a string');
       expect(error.status)
         .to.be.equal(400);
     }
@@ -95,11 +112,15 @@ describe('Validate User Test Suite', () => {
   it('test if last name is more than 3 length', () => {
     const { sut, data } = makeSut();
 
-    data.lastName= '123';
-
-    const result = sut.valid(data);
-
-    expect(result).to.be.deep.equal({ status: 400, error: '"lastName" need to have more than 3 length' });
+    data.lastName = '123';
+    
+    try {
+      sut.valid(data);
+    } catch (error: any) {
+      expect(error.error.message)
+        .to.be.equal('"lastName" need to have more than 3 length');
+      expect(error.status).to.be.equal(400)
+    }
   });
 
   it('test if last name throw a error when dont received a string', () => {
@@ -107,9 +128,13 @@ describe('Validate User Test Suite', () => {
 
     (data.lastName as any) = 123;
 
-    const result = sut.valid(data);
-
-    expect(result).to.be.deep.equal({ status: 400, error: '"lastName" must be a string' });
+    try {
+      sut.valid(data);
+    } catch (error: any) {
+      expect(error.error.message).to.be
+        .equal('"lastName" must be a string');
+      expect(error.status).to.be.equal(400)
+    }
   });
 
   it('test if password is more than 6 length', () => {
@@ -117,9 +142,13 @@ describe('Validate User Test Suite', () => {
 
     data.password = '12345';
 
-    const result = sut.valid(data);
-
-    expect(result).to.be.deep.equal({ status: 400, error: '"password" need to have more than 6 length' });
+    try {
+      sut.valid(data);
+    } catch (error: any) {
+      expect(error.status).to.be.equal(400)
+      expect(error.error.message)
+        .to.be.equal('"password" need to have more than 6 length');
+    }
   });
 
   it('test if password throw a error when dont received a string', () => {
@@ -127,9 +156,13 @@ describe('Validate User Test Suite', () => {
 
     (data.password as any) = 12345;
 
-    const result = sut.valid(data);
-
-    expect(result).to.be.deep.equal({ status: 400, error: '"password" must be a string' });
+    try {
+      sut.valid(data);
+    } catch (error: any) {
+      expect(error.error.message)
+        .to.be.equal('"password" must be a string');
+      expect(error.status).to.be.equal(400)
+    }
   });
 });
 

@@ -42,11 +42,14 @@ describe('Email Exists', () => {
       email: 'valid_email',
       password: 'valid_password',
     });
-
-    const emailExist = await sut.valid('valid_email');
-
-    expect(emailExist).to.be
-      .deep.equal({ status: 400, error: 'email already used' });
+    
+    try {
+      await sut.valid('valid_email');
+    } catch (error: any) {
+      expect(error.error.message).to.be
+        .deep.equal('email already used');
+      expect(error.status).to.be.equal(400)
+    }
   });
 
   it('Should return undefined if email doesnt exist', async () => {
