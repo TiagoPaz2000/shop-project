@@ -1,4 +1,4 @@
-import { IError } from '../../domain/protocols';
+import { IError } from '../protocols';
 
 const badRequest = ({ error, status }: IError) => ({ error, status });
 

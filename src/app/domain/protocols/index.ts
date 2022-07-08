@@ -35,3 +35,7 @@ export interface IHandleError {
   status: number | undefined
   error: Error
 }
+
+export interface IEmailValidator {
+  valid: (email: string) => boolean;
+}

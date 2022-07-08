@@ -1,7 +1,7 @@
 import User from '../entities/user/user';
 import { IUserRepository } from '../../data/usecases/user-repository';
 import { IEmailExists } from '../protocols';
-import { badRequest } from '../../presentation/helpers';
+import { badRequest } from '../helpers';
 
 export default class EmailExists implements IEmailExists {
   constructor(private userRepository: IUserRepository) {

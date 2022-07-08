@@ -1,7 +1,6 @@
 import User from '../../entities/user/user';
-import { IEmailValidator } from '../../validators/email-validator';
-import { IUserValidator } from '../../protocols';
-import { badRequest } from '../../../presentation/helpers';
+import { IUserValidator, IEmailValidator } from '../../protocols';
+import { badRequest } from '../../helpers';
 
 export default class UserValidator implements IUserValidator {
   constructor(private validEmail: IEmailValidator) {

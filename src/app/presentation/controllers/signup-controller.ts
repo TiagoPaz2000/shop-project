@@ -2,7 +2,7 @@
 import Controller from '../protocols/controller';
 import { HttpResponse } from '../protocols/http';
 import { IEmailExists, IError, INewAccount, IUserValidator } from '../../domain/protocols';
-import { handleError } from '../helpers';
+import { handleError } from '../../domain/helpers';
 
 namespace SignUpController {
   export type Request = {

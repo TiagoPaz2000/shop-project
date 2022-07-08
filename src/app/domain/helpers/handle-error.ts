@@ -1,4 +1,4 @@
-import { IHandleError } from '../../domain/protocols';
+import { IHandleError } from '../protocols';
 
 const handleError = (error: IHandleError) => {
   if (error.status) {

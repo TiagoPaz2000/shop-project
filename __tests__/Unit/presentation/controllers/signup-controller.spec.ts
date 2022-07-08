@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { IEmailExists, IError, IUserValidator } from '../../../../src/app/domain/protocols';
 import User from '../../../../src/app/domain/entities/user/user';
 import { SignUpController } from '../../../../src/app/presentation/controllers/signup-controller';
-import { badRequest } from '../../../../src/app/presentation/helpers'
+import { badRequest } from '../../../../src/app/domain/helpers'
 
 const makeUserValidator = (): IUserValidator => {
   class UserValidatorStub implements IUserValidator {

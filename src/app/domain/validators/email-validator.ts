@@ -1,6 +1,4 @@
-export interface IEmailValidator {
-  valid: (email: string) => boolean;
-}
+import { IEmailValidator } from '../protocols';
 
 export class EmailValidator implements IEmailValidator {
   valid(email: string) {

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import UserValidator from '../../../../src/app/domain/usecases/user/user-validator';
-import { IEmailValidator } from '../../../../src/app/domain/validators/email-validator';
+import { IEmailValidator } from '../../../../src/app/domain/protocols';
 
 const makeSut = () => {
   class EmailValidatorSpy implements IEmailValidator {
