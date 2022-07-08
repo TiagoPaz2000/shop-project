@@ -70,6 +70,25 @@ describe('SignUpController', () => {
     expect(httpResponse.body).to.be.eql({ error: '"firstName" must be a string' })
   });
 
+  it('Should return status 500 if some dependency throw an exception', async () => {
+    const { sut, userValidator } = makeSut();
+
+    sinon.stub(userValidator, 'valid').throws();
+
+    const httpRequest = {
+      body: {
+        firstName: 'invalid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest.body);
+    expect(httpResponse.statusCode).to.be.equal(500);
+    expect(httpResponse.body).to.be.eql({ error: 'internal server error' })
+  });
+
   it('Should valid user method is called with correct params', async () => {
     const { sut, userValidator } = makeSut();
 

@@ -1,10 +1,16 @@
-
 import { IHandleError } from '../../domain/protocols';
 
 const handleError = (error: IHandleError) => {
+  if (error.status) {
+    return ({
+      body: { error: error.error.message },
+      statusCode: error.status,
+    });
+  }
+
   return ({
-    body: { error: error.error.message },
-    statusCode: error.status || 500,
+    body: { error: 'internal server error' },
+    statusCode: 500,
   });
 };
 
