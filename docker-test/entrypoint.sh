@@ -3,6 +3,6 @@ docker run -d \
   -p 5432:5432 \
   -e POSTGRES_USER=root \
 	-e POSTGRES_PASSWORD=docker \
-  -e POSTGRES_DB=porquinho_test \
+  -e POSTGRES_DB=porquinho \
 	-e PGDATA=/var/lib/postgresql/data/pgdata \
 	postgres

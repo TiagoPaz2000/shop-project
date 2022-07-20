@@ -1,6 +1,7 @@
 import 'reflect-metadata';
+import { DataSource, Repository } from 'typeorm';
 import User from '../../domain/entities/user/user';
-import { AppDataSource } from '../../infra/typeorm/data-source';
+// import { AppDataSource } from '../../infra/typeorm/data-source';
 import UserEntity from '../../infra/typeorm/entity/User';
 
 export interface IUserRepository {
@@ -9,10 +10,10 @@ export interface IUserRepository {
 }
 
 export class UserRepository implements IUserRepository {
-  private user;
+  private user: Repository<UserEntity>;
 
-  constructor() {
-    this.user = AppDataSource.getRepository(UserEntity);
+  constructor(dataSource: DataSource) {
+    this.user = dataSource.getRepository(UserEntity);
   }
 
   async create(data: Omit<User, 'id'>): Promise<User> {

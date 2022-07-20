@@ -7,6 +7,7 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=porquinho
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:

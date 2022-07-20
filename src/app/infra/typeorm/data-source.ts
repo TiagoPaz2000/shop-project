@@ -26,6 +26,7 @@ export const AppDataSource = new DataSource({
     subscribers: [],
 });
 
+
 AppDataSource.initialize()
     .then(() => {
         console.log('Data Source has been initialized!');
@@ -33,5 +34,3 @@ AppDataSource.initialize()
     .catch((err) => {
         console.error('Error during Data Source initialization', err);
     });
-
-// export AppDataSource;
