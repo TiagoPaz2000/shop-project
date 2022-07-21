@@ -1,56 +1,64 @@
 import { describe, it } from 'mocha';
 import { expect} from 'chai';
 import sinon from 'sinon';
-import { IEmailExists, IError, IUserValidator } from '../../../../src/app/domain/protocols';
-import User from '../../../../src/app/domain/entities/user/user';
 import { SignUpController } from '../../../../src/app/presentation/controllers/signup-controller';
 import { badRequest } from '../../../../src/app/domain/helpers'
-
-const makeUserValidator = (): IUserValidator => {
-  class UserValidatorStub implements IUserValidator {
-    valid({ firstName, lastName, email, password }: Omit<User, 'id'>): void {
-      return undefined;
-    }
-  }
-
-  return new UserValidatorStub();
-};
-
-const makeEmailExists = (): IEmailExists => {
-  class EmailExistsStub implements IEmailExists {
-    async valid(email: User['email']): Promise<void> {
-      return undefined;
-    }
-  }
-
-  return new EmailExistsStub();
-};
-
-const makeNewAccount = (): any => {
-  class NewAccountStub {
-    async create(userData: Omit<User, 'id'>): Promise<string> {
-      return 'valid_token';
-    }
-  }
-
-  return new NewAccountStub();
-};
+import { makeEmailExists, makeUserValidator, makeNewAccount, makePasswordEncrypter } from '../../mocks/usecases';
 
 const makeSut = () => {
   const userValidator = makeUserValidator();
   const emailExists = makeEmailExists();
   const newAccount = makeNewAccount();
-  const sut = new SignUpController(userValidator, emailExists, newAccount);
+  const passwordEncrypter = makePasswordEncrypter()
+  const sut = new SignUpController(userValidator, emailExists, newAccount, passwordEncrypter);
 
   return ({
     sut,
     userValidator,
     emailExists,
     newAccount,
+    passwordEncrypter,
   });
 };
 
 describe('SignUpController', () => {
+  it('Should encrypt password method is called with correct params', async () => {
+    const { sut, passwordEncrypter } = makeSut();
+
+    const passwordEncrypterSpy = sinon.spy(passwordEncrypter, 'encrypt');
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
+    };
+
+    await sut.handle(httpRequest.body);
+    expect(passwordEncrypterSpy.calledWith(httpRequest.body.password)).true;
+  });
+
+  it('Should return status 500 if encrypter throws', async () => {
+    const { sut, passwordEncrypter } = makeSut();
+
+    sinon.stub(passwordEncrypter, 'encrypt').throws()
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'valid_password',
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest.body);
+    expect(httpResponse.statusCode).to.be.equal(500);
+    expect(httpResponse.body).to.be.eql({ error: 'internal server error' })
+  });
+
   it('Should return status 400 if receive invalid user first name', async () => {
     const { sut, userValidator } = makeSut();
 

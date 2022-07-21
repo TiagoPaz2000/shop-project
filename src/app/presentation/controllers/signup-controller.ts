@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import Controller from '../protocols/controller';
 import { HttpResponse } from '../protocols/http';
-import { IEmailExists, IError, INewAccount, IUserValidator } from '../../domain/protocols';
+import { IEmailExists, IError, INewAccount, IPasswordEncrypter, IUserValidator } from '../../domain/protocols';
 import { handleError } from '../../domain/helpers';
 
 namespace SignUpController {
@@ -18,6 +18,7 @@ export class SignUpController implements Controller {
     private userValidator: IUserValidator,
     private emailExists: IEmailExists,
     private newAccount: INewAccount,
+    private passwordEncrypter: IPasswordEncrypter,
   ) {
     this.userValidator = userValidator;
   }
@@ -27,6 +28,8 @@ export class SignUpController implements Controller {
       this.userValidator.valid(httpRequest);
 
       await this.emailExists.valid(httpRequest.email);
+
+      const encryptedPassword = this.passwordEncrypter.encrypt(httpRequest.password);
 
       const newAccount = await this.newAccount.create(httpRequest);
 
