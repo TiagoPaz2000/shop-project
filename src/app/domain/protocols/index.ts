@@ -43,3 +43,5 @@ export interface IEmailValidator {
 export interface IPasswordEncrypter {
   encrypt(password: User['password']): Promise<User['password']>
 }
+
+

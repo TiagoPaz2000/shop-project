@@ -184,8 +184,17 @@ describe('SignUpController', () => {
       },
     };
 
+    const expectBody = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email',
+        password: 'encrypted_password',
+      },
+    }
+
     await sut.handle(httpRequest.body);
 
-    expect(newAccountSpy.calledWith(httpRequest.body)).to.be.true;
+    expect(newAccountSpy.calledWith(expectBody.body)).to.be.true;
   });
 });

@@ -29,9 +29,9 @@ export class SignUpController implements Controller {
 
       await this.emailExists.valid(httpRequest.email);
 
-      const encryptedPassword = this.passwordEncrypter.encrypt(httpRequest.password);
+      const encryptedPassword = await this.passwordEncrypter.encrypt(httpRequest.password);
 
-      const newAccount = await this.newAccount.create(httpRequest);
+      const newAccount = await this.newAccount.create({ ...httpRequest, password: encryptedPassword });
 
       return ({ statusCode: 201, body: { token: newAccount } });
     } catch (error) {
