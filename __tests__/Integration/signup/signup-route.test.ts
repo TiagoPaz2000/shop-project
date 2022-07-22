@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { expect } from 'chai';
+import 'dotenv/config'
+
+const { API_KEY } = process.env;
 
 const makeSut = () => {
   const urlBase: string = 'http://localhost:3000';
@@ -12,6 +15,25 @@ const makeSut = () => {
 }
 
 describe('SignUp Route', () => {
+  it('Should return 400 and error message if dont send a valid api key', async () => {
+    const { urlBase, signUpRoute } = makeSut();
+
+    const httpRequest = {
+      body: {
+        firstName: 'valid_firstName',
+        lastName: 'valid_lastName',
+        email: 'valid_email@mail.com',
+        password: 'valid_password',
+        apiKey: API_KEY + 'invalid_key'
+      },
+    };
+
+    await axios.post(urlBase + signUpRoute, httpRequest.body).catch(({ response }) => {
+      expect(response.status).to.be.equal(400)
+      expect(response.data).to.be.eql({ response: { error: '"apiKey" is incorrect' }})
+    });    
+  });
+
   it('Should return 400 and error message if dont send a valid email', async () => {
     const { urlBase, signUpRoute } = makeSut();
 
@@ -19,8 +41,9 @@ describe('SignUp Route', () => {
       body: {
         firstName: 'valid_firstName',
         lastName: 'valid_lastName',
-        email: 'valid_email',
+        email: 'invalid_email',
         password: 'valid_password',
+        apiKey: API_KEY,
       },
     };
 
@@ -39,6 +62,7 @@ describe('SignUp Route', () => {
         lastName: 'valid_lastName',
         email: 'valid_email@mail.com',
         password: '',
+        apiKey: API_KEY,
       },
     };
 
@@ -57,6 +81,7 @@ describe('SignUp Route', () => {
         lastName: 'valid_lastName',
         email: 'valid_email@mail.com',
         password: 'valid_password',
+        apiKey: API_KEY,
       },
     };
 
@@ -75,6 +100,7 @@ describe('SignUp Route', () => {
         lastName: '',
         email: 'valid_email@mail.com',
         password: 'valid_password',
+        apiKey: API_KEY,
       },
     };
 
@@ -93,6 +119,7 @@ describe('SignUp Route', () => {
         lastName: 'valid_lastName',
         email: 'valid@mail.com',
         password: 'valid_password',
+        apiKey: API_KEY,
       },
     };
 
@@ -111,6 +138,7 @@ describe('SignUp Route', () => {
         lastName: 'valid_lastName',
         email: 'valid@mail.com',
         password: 'valid_password',
+        apiKey: API_KEY,
       },
     };
 
