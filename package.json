@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TiagoPaz2000/My-Porquinho.git"
+    "url": "https://github.com/TiagoPaz2000/shop-project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TiagoPaz2000/My-Porquinho/issues"
+    "url": "https://github.com/TiagoPaz2000/shop-project/issues"
   },
-  "homepage": "https://github.com/TiagoPaz2000/My-Porquinho#readme",
+  "homepage": "https://github.com/TiagoPaz2000/shop-project#readme",
   "devDependencies": {
     "@babel/cli": "^7.18.9",
     "@babel/core": "^7.18.9",
