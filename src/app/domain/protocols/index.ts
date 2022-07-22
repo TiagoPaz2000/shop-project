@@ -37,11 +37,13 @@ export interface IHandleError {
 }
 
 export interface IEmailValidator {
-  valid: (email: string) => boolean;
+  valid(email: string): boolean;
 }
 
 export interface IPasswordEncrypter {
-  encrypt(password: User['password']): Promise<User['password']>
+  encrypt(password: User['password']): Promise<User['password']>;
 }
 
-
+export interface IEmailValidatorAdapter {
+  valid(email: string): void;
+}

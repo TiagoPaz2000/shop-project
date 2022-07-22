@@ -68,7 +68,7 @@ describe('SignUp Route', () => {
 
     await axios.post(urlBase + signUpRoute, httpRequest.body).catch(({ response }) => {
       expect(response.status).to.be.equal(400)
-      expect(response.data).to.be.eql({ response: { error: '\"password\" need to have more than 6 length' }})
+      expect(response.data).to.be.eql({ response: { error: '"password" need to have more than 6 length' }})
     });    
   });
 
