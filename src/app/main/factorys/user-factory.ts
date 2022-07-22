@@ -9,6 +9,10 @@ import TokenAdapter from '../../infra/generate-token/token-adapter';
 // import AppDataSource from '../../infra/typeorm/data-source';
 import EncrypterAdapter from '../../infra/encrypter/encrypter-adapter';
 import PasswordEncrypter from '../../domain/usecases/user/password-encrypter';
+import ApiKeyDecorator from '../../presentation/decorators/api-key-decorator';
+import 'dotenv/config';
+
+const { API_KEY } = process.env;
 
 export const signUpFactory = () => {
   const encrypterAdapter = new EncrypterAdapter();
@@ -21,6 +25,7 @@ export const signUpFactory = () => {
   const newAccount = new AddAccount(userRepository, tokenGenerator);
   const emailExists = new EmailExists(userRepository);
   const signUpController = new SignUpController(userValidator, emailExists, newAccount, passwordEncrypter);
+  const apiKeyDecorator = new ApiKeyDecorator(signUpController, API_KEY);
 
-  return signUpController;
+  return apiKeyDecorator;
 };

@@ -1,8 +1,8 @@
 docker run -d \
-	--name porquinho-test \
+	--name shop-project \
   -p 5432:5432 \
   -e POSTGRES_USER=root \
 	-e POSTGRES_PASSWORD=docker \
-  -e POSTGRES_DB=porquinho \
+  -e POSTGRES_DB=shop_project \
 	-e PGDATA=/var/lib/postgresql/data/pgdata \
-	postgres
+	postgres:10.3
