@@ -32,7 +32,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      - DATABASE_URL=postgresql://root:docker@localhost:5432/porquinho?schema=public
+      - DATABASE_URL=postgresql://root:docker@postgres:5432/porquinho?schema=porquinho
       - PORT=3001
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:3001"]
