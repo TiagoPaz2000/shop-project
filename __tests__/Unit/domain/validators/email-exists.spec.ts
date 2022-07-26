@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { IUserRepository } from '../../../../src/app/data/usecases/user-repository';
+import { IUserRepository } from '../../../../src/app/data/protocols';
 import EmailExists from '../../../../src/app/domain/validators/email-exists';
 import User from '../../../../src/app/domain/entities/user/user';
 
@@ -57,7 +57,7 @@ describe('Email Exists', () => {
 
     const emailExist = await sut.valid('valid_email');
 
-    expect(emailExist).to.be.equal(undefined);
+    expect(emailExist).to.be.equal(null);
   });
 
   it('Test if findOne is called with correct arg', async () => {

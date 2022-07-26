@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import User from '../../../../src/app/domain/entities/user/user';
 import { IToken, ITokenGenerator } from '../../../../src/app/domain/protocols';
-import { IUserRepository } from '../../../../src/app/data/usecases/user-repository';
 import AddAccount from '../../../../src/app/domain/usecases/user/add-account';
+import { makeUserRepository } from '../../mocks/usecases';
 
 const makeTokenGenerator = (): ITokenGenerator => {
   class TokenGeneratorStub implements ITokenGenerator {
@@ -14,26 +14,6 @@ const makeTokenGenerator = (): ITokenGenerator => {
   }
 
   return new TokenGeneratorStub();
-};
-
-const makeUserRepository = (): IUserRepository => {
-  class UserRepositoryStub implements IUserRepository {
-    async create(data: Omit<User, 'id'>): Promise<User> {
-      return new Promise(resolve => resolve({
-        id: 1,
-        firstName: 'valid_firstName',
-        lastName: 'valid_lastName',
-        email: 'valid_email',
-        password: 'valid_password',
-      }));
-    }
-
-    async findOneByEmail(email: User['email']): Promise<null | User> {
-      return null;
-    }
-  }
-
-  return new UserRepositoryStub();
 };
 
 const makeSut = () => {

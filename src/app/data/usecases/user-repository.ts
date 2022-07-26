@@ -1,16 +1,9 @@
-// import 'reflect-metadata';
-// import { DataSource, Repository } from 'typeorm';
 import User from '../../domain/entities/user/user';
-// import { AppDataSource } from '../../infra/typeorm/data-source';
-// import UserEntity from '../../infra/typeorm/entity/User';
+import { IUserRepository } from '../protocols/index';
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-
-export interface IUserRepository {
-  create(data: Omit<User, 'id'>): Promise<User>;
-  findOneByEmail(email: User['email']): Promise<null | User>;
-}
 
 export class UserRepository implements IUserRepository {
   private prisma: PrismaClient;

@@ -5,7 +5,7 @@ export interface IUserValidator {
 }
 
 export interface IEmailExists {
-  valid(email: User['email']): Promise<void>
+  valid(email: User['email']): Promise<void | User | null>
 }
 
 export interface INewAccount {
@@ -46,4 +46,13 @@ export interface IPasswordEncrypter {
 
 export interface IEmailValidatorAdapter {
   valid(email: string): void;
+}
+
+export interface ILoginData {
+  email: User['email'],
+  password: User['password'],
+}
+
+export interface IUserExists {
+  valid({ email, password }: ILoginData): Promise<Omit<User, 'password'>>
 }
